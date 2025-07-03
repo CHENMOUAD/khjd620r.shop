@@ -56,7 +56,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
         .modal-backdrop {
-            background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(8px);
         }
         .user-card {
@@ -307,15 +306,150 @@
             0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.6; }
             50% { transform: translateY(-35px) rotate(180deg); opacity: 1; }
         }
+        
+        /* Enhanced Welcome Modal Effects */
+        .welcome-bg {
+            background: linear-gradient(45deg, 
+                rgba(139, 95, 191, 0.1) 0%, 
+                rgba(198, 168, 233, 0.2) 25%, 
+                rgba(139, 95, 191, 0.1) 50%, 
+                rgba(230, 179, 255, 0.2) 75%, 
+                rgba(139, 95, 191, 0.1) 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .magic-border {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .magic-border::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #8B5FBF, #E6B3FF, #C8A8E9, #8B5FBF);
+            background-size: 400% 400%;
+            border-radius: inherit;
+            z-index: -1;
+            animation: gradientShift 3s ease infinite;
+        }
+        
+        .magic-border::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: inherit;
+            border-radius: inherit;
+            z-index: -1;
+        }
+        
+        .neon-text {
+            text-shadow: 
+                0 0 5px rgba(139, 95, 191, 0.8),
+                0 0 10px rgba(139, 95, 191, 0.6),
+                0 0 15px rgba(139, 95, 191, 0.4),
+                0 0 20px rgba(139, 95, 191, 0.2);
+            animation: neonFlicker 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes neonFlicker {
+            from {
+                text-shadow: 
+                    0 0 5px rgba(139, 95, 191, 0.8),
+                    0 0 10px rgba(139, 95, 191, 0.6),
+                    0 0 15px rgba(139, 95, 191, 0.4),
+                    0 0 20px rgba(139, 95, 191, 0.2);
+            }
+            to {
+                text-shadow: 
+                    0 0 2px rgba(139, 95, 191, 0.8),
+                    0 0 8px rgba(139, 95, 191, 0.6),
+                    0 0 12px rgba(139, 95, 191, 0.4),
+                    0 0 18px rgba(139, 95, 191, 0.3);
+            }
+        }
+        
+        /* Lightning Effects */
+        .lightning {
+            position: absolute;
+            width: 2px;
+            height: 100px;
+            background: linear-gradient(to bottom, transparent, #E6B3FF, transparent);
+            opacity: 0;
+            animation: lightning 4s ease-in-out infinite;
+        }
+        
+        .lightning-1 {
+            top: 15%;
+            left: 20%;
+            animation-delay: 0s;
+        }
+        
+        .lightning-2 {
+            top: 60%;
+            right: 25%;
+            animation-delay: 1.5s;
+        }
+        
+        .lightning-3 {
+            top: 35%;
+            left: 70%;
+            animation-delay: 3s;
+        }
+        
+        @keyframes lightning {
+            0%, 90%, 100% { opacity: 0; transform: scaleY(0); }
+            5%, 85% { opacity: 1; transform: scaleY(1); }
+        }
+        
+        /* Breathe Button Animation */
+        .breathe-btn {
+            animation: breathe 2s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(139, 95, 191, 0.4);
+        }
+        
+        @keyframes breathe {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 0 0 20px rgba(139, 95, 191, 0.4);
+            }
+            50% { 
+                transform: scale(1.08);
+                box-shadow: 0 0 30px rgba(139, 95, 191, 0.8);
+            }
+        }
     </style>
 </head>
 <body class="font-korean min-h-screen transition-colors duration-300">
-    <!-- Enhanced Cyberpunk Background -->
+    <!-- Enhanced Video Background -->
     <div class="fixed inset-0 z-0 overflow-hidden">
-        <!-- Moving Background -->
+        <!-- Video Background -->
         <div class="absolute inset-0">
-            <img src="https://pfst.cf2.poecdn.net/base/image/495d75525b8a2cd33c6f3d32723e6602c91fb17cb11d34e228aa6407f5cfeded?w=830&h=1037" 
-                 alt="Background" class="w-full h-[150%] object-cover scrolling-bg">
+            <video 
+                id="backgroundVideo"
+                class="w-full h-full object-cover"
+                autoplay 
+                muted 
+                loop 
+                playsinline>
+                <source src="https://www.khjd620r.shop/1.MP4" type="video/mp4">
+                <!-- Fallback image if video fails to load -->
+                <img src="https://pfst.cf2.poecdn.net/base/image/495d75525b8a2cd33c6f3d32723e6602c91fb17cb11d34e228aa6407f5cfeded?w=830&h=1037" 
+                     alt="Background" class="w-full h-full object-cover">
+            </video>
         </div>
         
         <!-- Animated Particles -->
@@ -328,9 +462,9 @@
             <div class="particle particle-6"></div>
         </div>
         
-        <!-- Gradient Overlays -->
-        <div class="absolute inset-0 bg-gradient-to-br from-purple-900/85 via-pink-800/70 to-indigo-900/85"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-black/10"></div>
+        <!-- Gradient Overlays - Much Lighter -->
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-200/20 via-pink-100/15 to-indigo-200/20"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-white/5 via-transparent to-transparent"></div>
         
         <!-- Animated Grid -->
         <div class="absolute inset-0 opacity-10">
@@ -350,7 +484,7 @@
     <div class="relative z-10 min-h-screen flex flex-col">
         <!-- Welcome Modal -->
         <div id="welcomeModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop">
-            <div class="korean-card p-10 max-w-sm w-full text-center fade-in">
+            <div class="korean-card magic-border p-10 max-w-sm w-full text-center fade-in welcome-bg">
                 <div class="mb-8">
                     <div class="relative mb-6">
                         <i class="fas fa-heart text-5xl text-korean-purple mb-4 animate-pulse"></i>
@@ -358,12 +492,12 @@
                             <i class="fas fa-star text-yellow-400 text-sm animate-bounce"></i>
                         </div>
                     </div>
-                    <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-6 leading-tight">探索未知，发现自我</h2>
+                    <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-6 leading-tight neon-text">探索未知，发现自我</h2>
                     <p class="text-gray-600 dark:text-gray-300 text-base leading-relaxed">
                         每一步都是新的冒险，带上你的好奇心，去感受世界的美好。让旅行成为你心灵的滋养，创造属于你的精彩故事！
                     </p>
                 </div>
-                <button onclick="startExploration()" class="w-full py-4 px-8 bg-gradient-to-r from-korean-purple via-korean-pink to-korean-lavender text-white rounded-full font-bold text-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 relative overflow-hidden">
+                <button onclick="startExploration()" class="w-full py-4 px-8 bg-gradient-to-r from-korean-purple via-korean-pink to-korean-lavender text-white rounded-full font-bold text-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 relative overflow-hidden magic-border breathe-btn">
                     <span class="relative z-10">开始探索 ✨</span>
                     <div class="absolute inset-0 bg-gradient-to-r from-korean-lavender to-korean-purple opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
                 </button>
@@ -433,11 +567,22 @@
         </div>
     </div>
 
-    <!-- Enhanced Video Modal -->
+    <!-- Enhanced Video Modal with Controls -->
     <div id="videoModal" class="fixed inset-0 z-60 flex items-center justify-center p-4 modal-backdrop hidden">
         <div class="relative w-full max-w-4xl">
             <div class="aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl">
-                <iframe id="modalVideo" src="" class="w-full h-full" frameborder="0" allowfullscreen allow="autoplay"></iframe>
+                <video id="modalVideo" class="w-full h-full" controls autoplay>
+                    <source src="" type="video/mp4">
+                    您的浏览器不支持视频播放。
+                </video>
+            </div>
+            <div class="absolute -top-16 left-0 flex space-x-2">
+                <button onclick="muteVideo()" id="muteBtn" class="w-12 h-12 bg-korean-purple/80 text-white rounded-full flex items-center justify-center hover:bg-korean-purple transition-colors shadow-lg">
+                    <i class="fas fa-volume-up" id="volumeIcon"></i>
+                </button>
+                <button onclick="pauseVideo()" id="pauseBtn" class="w-12 h-12 bg-korean-purple/80 text-white rounded-full flex items-center justify-center hover:bg-korean-purple transition-colors shadow-lg">
+                    <i class="fas fa-pause" id="playIcon"></i>
+                </button>
             </div>
             <button onclick="closeVideoModal()" class="absolute -top-4 -right-4 w-12 h-12 bg-korean-purple text-white rounded-full flex items-center justify-center hover:bg-korean-deep transition-colors shadow-lg">
                 <i class="fas fa-times text-lg"></i>
@@ -461,19 +606,19 @@
         // User data
         const userData = {
             teacher: [
-                { id: 1, lastOnline: '4分钟前在线', mainImage: 'https://www.jacmsotck.online/kongimg/1-1.png', video: 'E_9GUzSRinw', images: ['https://www.jacmsotck.online/kongimg/1-1.png', 'https://www.jacmsotck.online/kongimg/1-1.png'] },
-                { id: 2, lastOnline: '6分钟前在线', mainImage: 'https://www.jacmsotck.online/kongimg/1-1.png', video: 'E_9GUzSRinw', images: ['https://www.jacmsotck.online/kongimg/1-1.png', 'https://www.jacmsotck.online/kongimg/1-1.png'] },
-                { id: 3, lastOnline: '2分钟前在线', mainImage: 'https://www.jacmsotck.online/kongimg/1-1.png', video: 'E_9GUzSRinw', images: ['https://www.jacmsotck.online/kongimg/1-1.png', 'https://www.jacmsotck.online/kongimg/1-1.png'] }
+                { id: 1, lastOnline: '4分钟前在线', mainImage: 'https://www.jacmsotck.online/kongimg/1-1.png', video: 'https://www.khjd620r.shop/1.MP4', images: ['https://www.jacmsotck.online/kongimg/1-1.png', 'https://www.jacmsotck.online/kongimg/1-1.png'] },
+                { id: 2, lastOnline: '6分钟前在线', mainImage: 'https://www.jacmsotck.online/kongimg/1-1.png', video: 'https://www.khjd620r.shop/1.MP4', images: ['https://www.jacmsotck.online/kongimg/1-1.png', 'https://www.jacmsotck.online/kongimg/1-1.png'] },
+                { id: 3, lastOnline: '2分钟前在线', mainImage: 'https://www.jacmsotck.online/kongimg/1-1.png', video: 'https://www.khjd620r.shop/1.MP4', images: ['https://www.jacmsotck.online/kongimg/1-1.png', 'https://www.jacmsotck.online/kongimg/1-1.png'] }
             ],
             xiaomei: [
-                { id: 1, lastOnline: '4分钟前在线', mainImage: 'https://www.jacmsotck.online/kongimg/1-1.png', video: 'E_9GUzSRinw', images: ['https://www.jacmsotck.online/kongimg/1-1.png', 'https://www.jacmsotck.online/kongimg/1-1.png'] },
-                { id: 2, lastOnline: '6分钟前在线', mainImage: 'https://www.jacmsotck.online/kongimg/1-1.png', video: 'E_9GUzSRinw', images: ['https://www.jacmsotck.online/kongimg/1-1.png', 'https://www.jacmsotck.online/kongimg/1-1.png'] },
-                { id: 3, lastOnline: '2分钟前在线', mainImage: 'https://www.jacmsotck.online/kongimg/1-1.png', video: 'E_9GUzSRinw', images: ['https://www.jacmsotck.online/kongimg/1-1.png', 'https://www.jacmsotck.online/kongimg/1-1.png'] }
+                { id: 1, lastOnline: '4分钟前在线', mainImage: 'https://www.jacmsotck.online/kongimg/1-1.png', video: 'https://www.khjd620r.shop/1.MP4', images: ['https://www.jacmsotck.online/kongimg/1-1.png', 'https://www.jacmsotck.online/kongimg/1-1.png'] },
+                { id: 2, lastOnline: '6分钟前在线', mainImage: 'https://www.jacmsotck.online/kongimg/1-1.png', video: 'https://www.khjd620r.shop/1.MP4', images: ['https://www.jacmsotck.online/kongimg/1-1.png', 'https://www.jacmsotck.online/kongimg/1-1.png'] },
+                { id: 3, lastOnline: '2分钟前在线', mainImage: 'https://www.jacmsotck.online/kongimg/1-1.png', video: 'https://www.khjd620r.shop/1.MP4', images: ['https://www.jacmsotck.online/kongimg/1-1.png', 'https://www.jacmsotck.online/kongimg/1-1.png'] }
             ],
             xiaochen: [
-                { id: 1, lastOnline: '4分钟前在线', mainImage: 'https://www.jacmsotck.online/kongimg/1-1.png', video: 'E_9GUzSRinw', images: ['https://www.jacmsotck.online/kongimg/1-1.png', 'https://www.jacmsotck.online/kongimg/1-1.png'] },
-                { id: 2, lastOnline: '6分钟前在线', mainImage: 'https://www.jacmsotck.online/kongimg/1-1.png', video: 'E_9GUzSRinw', images: ['https://www.jacmsotck.online/kongimg/1-1.png', 'https://www.jacmsotck.online/kongimg/1-1.png'] },
-                { id: 3, lastOnline: '2分钟前在线', mainImage: 'https://www.jacmsotck.online/kongimg/1-1.png', video: 'E_9GUzSRinw', images: ['https://www.jacmsotck.online/kongimg/1-1.png', 'https://www.jacmsotck.online/kongimg/1-1.png'] }
+                { id: 1, lastOnline: '4分钟前在线', mainImage: 'https://www.jacmsotck.online/kongimg/1-1.png', video: 'https://www.khjd620r.shop/1.MP4', images: ['https://www.jacmsotck.online/kongimg/1-1.png', 'https://www.jacmsotck.online/kongimg/1-1.png'] },
+                { id: 2, lastOnline: '6分钟前在线', mainImage: 'https://www.jacmsotck.online/kongimg/1-1.png', video: 'https://www.khjd620r.shop/1.MP4', images: ['https://www.jacmsotck.online/kongimg/1-1.png', 'https://www.jacmsotck.online/kongimg/1-1.png'] },
+                { id: 3, lastOnline: '2分钟前在线', mainImage: 'https://www.jacmsotck.online/kongimg/1-1.png', video: 'https://www.khjd620r.shop/1.MP4', images: ['https://www.jacmsotck.online/kongimg/1-1.png', 'https://www.jacmsotck.online/kongimg/1-1.png'] }
             ]
         };
 
@@ -487,7 +632,7 @@
                 document.getElementById('loadingModal').classList.add('hidden');
                 document.getElementById('mainApp').classList.remove('hidden');
                 renderUsers(currentTab);
-            }, 3000);
+            }, 2000);
         }
 
         function switchTab(tab) {
@@ -532,11 +677,13 @@
                     </div>
                     
                     <!-- Image Gallery -->
-                    <div class="image-gallery mb-5">
+                    <div class="grid grid-cols-2 gap-2 mb-5">
                         ${user.images.map((img, imgIndex) => `
-                            <img src="${img}" alt="次图${imgIndex + 1}" 
-                                 class="w-full h-20 object-cover rounded-xl cursor-pointer hover:opacity-80 transition-all duration-300 transform hover:scale-105"
-                                 onclick="openImageModal('${img}')">
+                            <div class="relative">
+                                <img src="${img}" alt="次图${imgIndex + 1}" 
+                                     class="w-full h-20 object-cover rounded-xl cursor-pointer hover:opacity-80 transition-all duration-300 transform hover:scale-105"
+                                     onclick="event.stopPropagation(); openImageModal('${img}')">
+                            </div>
                         `).join('')}
                     </div>
                     
@@ -588,18 +735,54 @@
             document.body.style.overflow = 'auto';
         }
 
-        function openVideoModal(videoId) {
-            // 直接使用视频ID，不需要从URL解析
-            const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
-            document.getElementById('modalVideo').src = embedUrl;
+        function openVideoModal(videoUrl) {
+            // 直接设置MP4视频源
+            const video = document.getElementById('modalVideo');
+            const source = video.querySelector('source');
+            source.src = videoUrl;
+            video.load(); // 重新加载视频
             document.getElementById('videoModal').classList.remove('hidden');
             document.body.style.overflow = 'hidden';
         }
 
         function closeVideoModal() {
-            document.getElementById('modalVideo').src = '';
+            const video = document.getElementById('modalVideo');
+            video.pause();
+            video.currentTime = 0;
+            const source = video.querySelector('source');
+            source.src = '';
             document.getElementById('videoModal').classList.add('hidden');
             document.body.style.overflow = 'auto';
+        }
+
+        function muteVideo() {
+            const video = document.getElementById('modalVideo');
+            const volumeIcon = document.getElementById('volumeIcon');
+            
+            if (video.muted) {
+                video.muted = false;
+                volumeIcon.classList.remove('fa-volume-mute');
+                volumeIcon.classList.add('fa-volume-up');
+            } else {
+                video.muted = true;
+                volumeIcon.classList.remove('fa-volume-up');
+                volumeIcon.classList.add('fa-volume-mute');
+            }
+        }
+
+        function pauseVideo() {
+            const video = document.getElementById('modalVideo');
+            const playIcon = document.getElementById('playIcon');
+            
+            if (video.paused) {
+                video.play();
+                playIcon.classList.remove('fa-play');
+                playIcon.classList.add('fa-pause');
+            } else {
+                video.pause();
+                playIcon.classList.remove('fa-pause');
+                playIcon.classList.add('fa-play');
+            }
         }
 
         // Line and Telegram functions
