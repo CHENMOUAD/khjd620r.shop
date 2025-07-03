@@ -1,213 +1,349 @@
 <!DOCTYPE html>
-<html lang="ja">
-
-<head> 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17194050374"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'AW-17194050374');
-</script>
- 
-<!-- Event snippet for 测试三桥 conversion page
-In your html page, add the snippet and call gtag_report_conversion when someone clicks on the chosen link or button. -->
-<script>
-function gtag_report_conversion(url) {
-  var callback = function () {
-    if (typeof(url) != 'undefined') {
-      window.location = url;
-    }
-  };
-  gtag('event', 'conversion', {
-      'send_to': 'AW-17194050374/ynu1CJ6mhuEaEMbG4YZA',
-      'event_callback': callback
-  });
-  return false;
-}
-</script>
-
-
-      
-      <script>
-        function k4() {
-              gtag_report_conversion('https://www.qq.com'); 
-        }
-    </script>
-    
+<html lang="zh-CN">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>株式投資特設ページ</title>
+    <title>韩式社交平台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'korean-purple': '#8B5FBF',
+                        'korean-pink': '#E6B3FF',
+                        'korean-lavender': '#C8A8E9'
+                    },
+                    fontFamily: {
+                        'korean': ['Noto Sans KR', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background-color: #121212;
-            color: #ffffff;
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
-
-        .page-container {
-            position: relative;
-            width: 100%;
-            overflow: hidden;
+        .korean-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(139, 95, 191, 0.3);
         }
-
-        .image-section {
-            width: 100%;
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
-
-        .image-section img {
-            width: 100%;
-            height: auto;
-            display: block;
+        .progress-bar {
+            background: linear-gradient(90deg, #8B5FBF, #E6B3FF);
+            animation: progress 3s ease-in-out;
         }
-
-        .placeholder-section {
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #222222;
+        @keyframes progress {
+            from { width: 0%; }
+            to { width: 100%; }
         }
-
-        .content-section {
-            width: 100%;
-            padding: 20px;
-            background-color: #121212;
-            box-sizing: border-box;
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
         }
-
-        .content-title {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            color: #00c300;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
-        .content-text {
-            font-size: 16px;
-            line-height: 1.8;
-            color: #dddddd;
+        .modal-backdrop {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
         }
-
-        .floating-line-icon {
-            position: fixed;
-            top: 50%;
-            right: 20px;
-            transform: translateY(-50%);
-            width: 60px;
-            height: 60px;
-            background-color: #00c300;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            animation: blink 1s infinite;
-            z-index: 1000;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        .user-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
-        .floating-line-icon img {
-            width: 40px;
-            height: 40px;
+        .user-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(139, 95, 191, 0.4);
         }
-
-        .floating-line-icon span {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background-color: #ff4747;
-            color: #ffffff;
-            font-size: 14px;
-            font-weight: bold;
-            width: 20px;
-            height: 20px;
-            line-height: 20px;
-            text-align: center;
-            border-radius: 50%;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        .tab-active {
+            background: linear-gradient(135deg, #8B5FBF, #C8A8E9);
+            color: white;
+            border: 2px solid #E6B3FF;
+            box-shadow: 0 4px 20px rgba(139, 95, 191, 0.5);
+            transform: scale(1.05);
         }
-
-        .floating-button {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #ff4747;
-            color: #ffffff; 
-            padding: 20px 50px;
-            border: none;
-            border-radius: 30px;
-            font-weight: bold;
-            cursor: pointer;
-            animation: breathe 2s infinite;
+        .tab-inactive {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
-
-        @keyframes blink {
-            0%, 100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.5;
-            }
+        .online-indicator {
+            animation: pulse 2s infinite;
         }
-
-        @keyframes breathe {
-            0%, 100% {
-                transform: translateX(-50%) scale(1);
-            }
-            50% {
-                transform: translateX(-50%) scale(1.05);
-            }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .dark .korean-card {
+            background: rgba(30, 30, 30, 0.95);
+            color: white;
+        }
+        .dark .glass-effect {
+            background: rgba(30, 30, 30, 0.8);
+        }
+        .scrolling-bg {
+            animation: scroll 20s linear infinite;
+        }
+        @keyframes scroll {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-50px); }
         }
     </style>
 </head>
+<body class="font-korean min-h-screen transition-colors duration-300">
+    <!-- Background -->
+    <div class="fixed inset-0 z-0 overflow-hidden">
+        <img src="https://pfst.cf2.poecdn.net/base/image/495d75525b8a2cd33c6f3d32723e6602c91fb17cb11d34e228aa6407f5cfeded?w=830&h=1037" 
+             alt="Background" class="w-full h-[120%] object-cover scrolling-bg">
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-900/80 via-pink-800/60 to-indigo-900/80"></div>
+    </div>
 
-<body>
-    <div class="page-container">
-        <!-- Line Icon -->
-        <div class="floating-line-icon" onclick="k4()">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/LINE_logo.svg" alt="LINE">
-            <span>1</span>
-        </div>
-
-        <!-- Images -->
-        <div class="image-section">
-            <img src="img/1.png" alt="画像1" onclick="k4()">
-            <img src="img/2.png" alt="画像2" onclick="k4()">
-            <img src="img/3.png" alt="画像3" onclick="k4()">
-            <img src="img/4.png" alt="画像4" onclick="k4()">
-        </div>
-
-        <!-- Placeholder Sections (Empty Screens) -->
-        <div class="placeholder-section"></div>
-        <div class="placeholder-section"></div>
-        <div class="placeholder-section"></div>
-
-        <!-- Content Section -->
-        <div class="content-section">
-            <div class="content-title">イノベーションエコシステムとスタートアップ企業</div>
-            <div class="content-text">
-日本の経済社会の発展は、以下の側面から概観することができます。
-
-第一に、経済面では、日本は世界第3位の経済大国です。戦後の復興と高度成長を経て、「失われた20年」に入り、経済成長は鈍化しました。しかしながら、近年、日本は技術革新と産業高度化を通じて、高付加価値産業中心の経済への転換を目指しています。
-
-第二に、人口問題は日本社会が直面する大きな課題です。日本は深刻な高齢化と低出生率の継続により、労働力不足と社会保障への逼迫が深刻化しています。政府はこの問題に対処するため、女性の就労促進や外国人労働者の導入など、様々な施策を講じています。
-
-科学技術・イノベーションの面では、日本はロボット、自動車、エレクトロニクスなどの分野で主導的な地位を維持しています。政府と企業は、デジタル経済とグリーンテクノロジーの発展を促進するため、研究開発に積極的に投資しています。
-                
+    <!-- Main Content -->
+    <div class="relative z-10 min-h-screen flex flex-col">
+        <!-- Welcome Modal -->
+        <div id="welcomeModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop">
+            <div class="korean-card p-8 max-w-sm w-full text-center fade-in">
+                <div class="mb-6">
+                    <i class="fas fa-heart text-4xl text-korean-purple mb-4"></i>
+                    <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">探索未知，发现自我</h2>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+                        每一步都是新的冒险，带上你的好奇心，去感受世界的美好。让旅行成为你心灵的滋养，创造属于你的精彩故事！
+                    </p>
+                </div>
+                <button onclick="startExploration()" class="w-full py-3 px-6 bg-gradient-to-r from-korean-purple to-korean-pink text-white rounded-full font-medium hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+                    开始探索 ✨
+                </button>
             </div>
         </div>
 
-        <!-- Bottom Button -->
-        <button class="floating-button" onclick="k4()">今すぐ参加</button>
+        <!-- Loading Modal -->
+        <div id="loadingModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop hidden">
+            <div class="korean-card p-8 max-w-sm w-full text-center">
+                <div class="mb-6">
+                    <i class="fas fa-magic text-3xl text-korean-purple mb-4 animate-spin"></i>
+                    <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-4">正在为您匹配...</h3>
+                </div>
+                <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mb-4">
+                    <div class="progress-bar h-2 rounded-full"></div>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-400">请稍候，精彩即将呈现</p>
+            </div>
+        </div>
+
+        <!-- Main App -->
+        <div id="mainApp" class="hidden flex-1 p-4">
+            <!-- Header -->
+            <div class="text-center mb-6">
+                <h1 class="text-2xl font-bold text-white mb-2">💜 韩式社交</h1>
+                <p class="text-purple-200 text-sm">发现你的完美伙伴</p>
+            </div>
+
+            <!-- Tabs -->
+            <div class="flex space-x-2 mb-6">
+                <button onclick="switchTab('teacher')" id="tab-teacher" class="flex-1 py-3 px-4 rounded-full text-sm font-medium transition-all duration-300 tab-active">
+                    👩‍🏫 老师
+                </button>
+                <button onclick="switchTab('xiaomei')" id="tab-xiaomei" class="flex-1 py-3 px-4 rounded-full text-sm font-medium transition-all duration-300 tab-inactive">
+                    🌸 小梅
+                </button>
+                <button onclick="switchTab('xiaochen')" id="tab-xiaochen" class="flex-1 py-3 px-4 rounded-full text-sm font-medium transition-all duration-300 tab-inactive">
+                    💫 小陈
+                </button>
+            </div>
+
+            <!-- User Cards Container -->
+            <div id="userContainer" class="space-y-4 pb-20">
+                <!-- User cards will be dynamically generated -->
+            </div>
+        </div>
     </div>
 
-  
-</body>
+    <!-- Image Modal -->
+    <div id="imageModal" class="fixed inset-0 z-60 flex items-center justify-center p-4 modal-backdrop hidden">
+        <div class="relative max-w-full max-h-full">
+            <img id="modalImage" src="" alt="" class="max-w-full max-h-full object-contain rounded-lg">
+            <button onclick="closeImageModal()" class="absolute top-4 right-4 w-10 h-10 bg-black/50 text-white rounded-full flex items-center justify-center hover:bg-black/70 transition-colors">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
 
+    <!-- Video Modal -->
+    <div id="videoModal" class="fixed inset-0 z-60 flex items-center justify-center p-4 modal-backdrop hidden">
+        <div class="relative w-full max-w-2xl">
+            <div class="aspect-video bg-black rounded-lg overflow-hidden">
+                <iframe id="modalVideo" src="" class="w-full h-full" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <button onclick="closeVideoModal()" class="absolute -top-12 right-0 w-10 h-10 bg-black/50 text-white rounded-full flex items-center justify-center hover:bg-black/70 transition-colors">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Dark mode detection
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+
+        // User data
+        const userData = {
+            teacher: [
+                { id: 1, lastOnline: '4分钟前在线', mainImage: 'https://www.jacmsotck.online/kongimg/1-1.png', video: 'https://www.youtube.com/watch?v=E_9GUzSRinw', images: ['https://www.jacmsotck.online/kongimg/1-1.png', 'https://www.jacmsotck.online/kongimg/1-1.png'] },
+                { id: 2, lastOnline: '6分钟前在线', mainImage: 'https://www.jacmsotck.online/kongimg/1-1.png', video: 'https://www.youtube.com/watch?v=E_9GUzSRinw', images: ['https://www.jacmsotck.online/kongimg/1-1.png', 'https://www.jacmsotck.online/kongimg/1-1.png'] },
+                { id: 3, lastOnline: '2分钟前在线', mainImage: 'https://www.jacmsotck.online/kongimg/1-1.png', video: 'https://www.youtube.com/watch?v=E_9GUzSRinw', images: ['https://www.jacmsotck.online/kongimg/1-1.png', 'https://www.jacmsotck.online/kongimg/1-1.png'] }
+            ],
+            xiaomei: [
+                { id: 1, lastOnline: '4分钟前在线', mainImage: 'https://www.jacmsotck.online/kongimg/1-1.png', video: 'https://www.youtube.com/watch?v=E_9GUzSRinw', images: ['https://www.jacmsotck.online/kongimg/1-1.png', 'https://www.jacmsotck.online/kongimg/1-1.png'] },
+                { id: 2, lastOnline: '6分钟前在线', mainImage: 'https://www.jacmsotck.online/kongimg/1-1.png', video: 'https://www.youtube.com/watch?v=E_9GUzSRinw', images: ['https://www.jacmsotck.online/kongimg/1-1.png', 'https://www.jacmsotck.online/kongimg/1-1.png'] },
+                { id: 3, lastOnline: '2分钟前在线', mainImage: 'https://www.jacmsotck.online/kongimg/1-1.png', video: 'https://www.youtube.com/watch?v=E_9GUzSRinw', images: ['https://www.jacmsotck.online/kongimg/1-1.png', 'https://www.jacmsotck.online/kongimg/1-1.png'] }
+            ],
+            xiaochen: [
+                { id: 1, lastOnline: '4分钟前在线', mainImage: 'https://www.jacmsotck.online/kongimg/1-1.png', video: 'https://www.youtube.com/watch?v=E_9GUzSRinw', images: ['https://www.jacmsotck.online/kongimg/1-1.png', 'https://www.jacmsotck.online/kongimg/1-1.png'] },
+                { id: 2, lastOnline: '6分钟前在线', mainImage: 'https://www.jacmsotck.online/kongimg/1-1.png', video: 'https://www.youtube.com/watch?v=E_9GUzSRinw', images: ['https://www.jacmsotck.online/kongimg/1-1.png', 'https://www.jacmsotck.online/kongimg/1-1.png'] },
+                { id: 3, lastOnline: '2分钟前在线', mainImage: 'https://www.jacmsotck.online/kongimg/1-1.png', video: 'https://www.youtube.com/watch?v=E_9GUzSRinw', images: ['https://www.jacmsotck.online/kongimg/1-1.png', 'https://www.jacmsotck.online/kongimg/1-1.png'] }
+            ]
+        };
+
+        let currentTab = 'teacher';
+
+        function startExploration() {
+            document.getElementById('welcomeModal').classList.add('hidden');
+            document.getElementById('loadingModal').classList.remove('hidden');
+            
+            setTimeout(() => {
+                document.getElementById('loadingModal').classList.add('hidden');
+                document.getElementById('mainApp').classList.remove('hidden');
+                renderUsers(currentTab);
+            }, 3000);
+        }
+
+        function switchTab(tab) {
+            // Update tab buttons
+            document.querySelectorAll('[id^="tab-"]').forEach(btn => {
+                btn.classList.remove('tab-active');
+                btn.classList.add('tab-inactive');
+            });
+            document.getElementById(`tab-${tab}`).classList.add('tab-active');
+            document.getElementById(`tab-${tab}`).classList.remove('tab-inactive');
+            
+            currentTab = tab;
+            renderUsers(tab);
+        }
+
+        function renderUsers(category) {
+            const container = document.getElementById('userContainer');
+            const users = userData[category];
+            
+            container.innerHTML = users.map((user, index) => `
+                <div class="korean-card p-4 user-card fade-in" style="animation-delay: ${index * 0.1}s">
+                    <div class="flex items-center mb-3">
+                        <div class="w-3 h-3 bg-green-400 rounded-full online-indicator mr-2"></div>
+                        <span class="text-sm text-gray-600 dark:text-gray-400">${user.lastOnline}</span>
+                    </div>
+                    
+                    <div class="relative mb-4">
+                        <img src="${user.mainImage}" alt="主图" 
+                             class="w-full h-48 object-cover rounded-lg cursor-pointer hover:opacity-90 transition-opacity"
+                             onclick="openImageModal('${user.mainImage}')">
+                        <div class="absolute top-2 right-2">
+                            <button onclick="openVideoModal('${user.video}')" 
+                                    class="w-10 h-10 bg-korean-purple/80 text-white rounded-full flex items-center justify-center hover:bg-korean-purple transition-colors">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="flex space-x-2 mb-4">
+                        ${user.images.map(img => `
+                            <img src="${img}" alt="次图" 
+                                 class="w-16 h-16 object-cover rounded-lg cursor-pointer hover:opacity-90 transition-opacity"
+                                 onclick="openImageModal('${img}')">
+                        `).join('')}
+                    </div>
+                    
+                    <div class="flex space-x-2">
+                        <button onclick="funlion()" 
+                           class="flex-1 py-2 px-4 bg-green-500 text-white rounded-lg text-center text-sm font-medium hover:bg-green-600 transition-colors flex items-center justify-center">
+                            <i class="fab fa-line mr-2"></i>Line
+                        </button>
+                        <button onclick="funtelegarm()" 
+                           class="flex-1 py-2 px-4 bg-blue-500 text-white rounded-lg text-center text-sm font-medium hover:bg-blue-600 transition-colors flex items-center justify-center">
+                            <i class="fab fa-telegram mr-2"></i>Telegram
+                        </button>
+                    </div>
+                    ${index === 2 ? `
+                    <div class="flex space-x-2 mt-3">
+                        <button onclick="funlion()" 
+                           class="flex-1 py-2 px-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg text-center text-sm font-medium hover:shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center">
+                            <i class="fab fa-line mr-2"></i>联系 Line
+                        </button>
+                        <button onclick="funtelegarm()" 
+                           class="flex-1 py-2 px-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg text-center text-sm font-medium hover:shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center">
+                            <i class="fab fa-telegram mr-2"></i>联系 Telegram
+                        </button>
+                    </div>` : ''}
+                </div>
+            `).join('');
+        }
+
+        function openImageModal(imageSrc) {
+            document.getElementById('modalImage').src = imageSrc;
+            document.getElementById('imageModal').classList.remove('hidden');
+        }
+
+        function closeImageModal() {
+            document.getElementById('imageModal').classList.add('hidden');
+        }
+
+        function openVideoModal(videoUrl) {
+            const videoId = videoUrl.split('v=')[1];
+            const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+            document.getElementById('modalVideo').src = embedUrl;
+            document.getElementById('videoModal').classList.remove('hidden');
+        }
+
+        function closeVideoModal() {
+            document.getElementById('modalVideo').src = '';
+            document.getElementById('videoModal').classList.add('hidden');
+        }
+
+        // Line and Telegram functions
+        function funlion() {
+            console.log('Line button clicked');
+            // Add your Line integration logic here
+            alert('Line 联系功能');
+        }
+
+        function funtelegarm() {
+            console.log('Telegram button clicked');
+            // Add your Telegram integration logic here
+            alert('Telegram 联系功能');
+        }
+
+        // Close modals when clicking outside
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal-backdrop')) {
+                closeImageModal();
+                closeVideoModal();
+            }
+        });
+    </script>
+</body>
 </html>
