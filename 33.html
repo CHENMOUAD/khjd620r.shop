@@ -558,7 +558,7 @@
     </div>
 
     <!-- Enhanced Image Modal -->
-    <div id="imageModal" class="fixed inset-0 z-60 flex items-center justify-center p-4 modal-backdrop hidden">
+    <div id="imageModal" class="fixed inset-0 flex items-center justify-center p-4 hidden" style="z-index: 9999; background: rgba(0, 0, 0, 0.8);">
         <div class="relative max-w-full max-h-full">
             <img id="modalImage" src="" alt="" class="max-w-full max-h-full object-contain rounded-2xl shadow-2xl">
             <button onclick="closeImageModal()" class="absolute -top-4 -right-4 w-12 h-12 bg-korean-purple text-white rounded-full flex items-center justify-center hover:bg-korean-deep transition-colors shadow-lg">
@@ -568,17 +568,17 @@
     </div>
 
     <!-- Enhanced Video Modal with Controls -->
-    <div id="videoModal" class="fixed inset-0 z-60 flex items-center justify-center p-4 modal-backdrop hidden">
+    <div id="videoModal" class="fixed inset-0 flex items-center justify-center p-4 hidden" style="z-index: 9999; background: rgba(0, 0, 0, 0.8);">
         <div class="relative w-full max-w-4xl">
             <div class="aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl">
-                <video id="modalVideo" class="w-full h-full" controls autoplay>
+                <video id="modalVideo" class="w-full h-full" controls autoplay muted>
                     <source src="" type="video/mp4">
                     您的浏览器不支持视频播放。
                 </video>
             </div>
             <div class="absolute -top-16 left-0 flex space-x-2">
                 <button onclick="muteVideo()" id="muteBtn" class="w-12 h-12 bg-korean-purple/80 text-white rounded-full flex items-center justify-center hover:bg-korean-purple transition-colors shadow-lg">
-                    <i class="fas fa-volume-up" id="volumeIcon"></i>
+                    <i class="fas fa-volume-mute" id="volumeIcon"></i>
                 </button>
                 <button onclick="pauseVideo()" id="pauseBtn" class="w-12 h-12 bg-korean-purple/80 text-white rounded-full flex items-center justify-center hover:bg-korean-purple transition-colors shadow-lg">
                     <i class="fas fa-pause" id="playIcon"></i>
