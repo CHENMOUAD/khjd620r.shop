@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>원나잇 스탠드를 찾고 있어요</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'korean-purple': '#8B5FBF',
+                        'korean-pink': '#E6B3FF',
+                        'korean-lavender': '#C8A8E9',
+                        'korean-deep': '#6A4C93'
+                    },
+                    fontFamily: {
+                        'korean': ['Noto Sans KR', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .korean-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+            border-radius: 24px;
+            box-shadow: 0 12px 40px rgba(139, 95, 191, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(3px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .progress-bar {
+            background: linear-gradient(90deg, #8B5FBF, #E6B3FF);
+            animation: progress 3s ease-in-out;
+        }
+        @keyframes progress {
+            from { width: 0%; }
+            to { width: 100%; }
+        }
+        .fade-in {
+            animation: fadeIn 0.6s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .modal-backdrop {
+            backdrop-filter: blur(3px);
+        }
+        .user-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .user-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        .user-card:hover::before {
+            left: 100%;
+        }
+        .user-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(139, 95, 191, 0.4);
+        }
+        .tab-active {
+            background: linear-gradient(135deg, #8B5FBF, #C8A8E9);
+            color: white;
+            border: 2px solid #E6B3FF;
+            box-shadow: 0 8px 25px rgba(139, 95, 191, 0.6);
+            transform: scale(1.08);
+            position: relative;
+        }
+        .tab-active::after {
+            content: '✨';
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            font-size: 12px;
+            animation: sparkle 2s infinite;
+        }
+        @keyframes sparkle {
+            0%, 100% { opacity: 1; transform: rotate(0deg); }
+            50% { opacity: 0.5; transform: rotate(180deg); }
+        }
+        .tab-inactive {
+            background: rgba(255, 255, 255, 0.15);
+            color: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transform: scale(1);
+        }
+        .tab-inactive:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.02);
+        }
+        .online-indicator {
+            animation: pulse 2s infinite;
+            box-shadow: 0 0 10px #10B981;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
+        }
+        .scrolling-bg {
+            animation: scroll 25s linear infinite;
+        }
+        @keyframes scroll {
+            0% { transform: translateY(0) scale(1.1); }
+            100% { transform: translateY(-100px) scale(1.1); }
+        }
+        .video-overlay {
+            background: linear-gradient(45deg, rgba(139, 95, 191, 0.8), rgba(198, 168, 233, 0.8));
+            backdrop-filter: blur(2px);
+        }
+        .contact-btn {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .contact-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.3s;
+        }
+        .contact-btn:hover::before {
+            left: 100%;
+        }
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+        .premium-card {
+            background: linear-gradient(135deg, rgba(139, 95, 191, 0.1), rgba(198, 168, 233, 0.1));
+            border: 2px solid rgba(139, 95, 191, 0.3);
+        }
+        .dark .korean-card {
+            background: rgba(20, 20, 20, 0.95);
+            color: white;
+            border: 1px solid rgba(139, 95, 191, 0.3);
+        }
+        .dark .glass-effect {
+            background: rgba(20, 20, 20, 0.8);
+        }
+        
+        /* Enhanced Cyberpunk Effects */
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: linear-gradient(45deg, #8B5FBF, #E6B3FF);
+            border-radius: 50%;
+            opacity: 0.7;
+        }
+        .particle-1 {
+            top: 20%;
+            left: 10%;
+            animation: float1 6s ease-in-out infinite;
+        }
+        .particle-2 {
+            top: 60%;
+            left: 80%;
+            animation: float2 8s ease-in-out infinite;
+        }
+        .particle-3 {
+            top: 80%;
+            left: 20%;
+            animation: float3 7s ease-in-out infinite;
+        }
+        .particle-4 {
+            top: 30%;
+            left: 70%;
+            animation: float4 9s ease-in-out infinite;
+        }
+        .particle-5 {
+            top: 50%;
+            left: 30%;
+            animation: float5 5s ease-in-out infinite;
+        }
+        .particle-6 {
+            top: 10%;
+            left: 60%;
+            animation: float6 10s ease-in-out infinite;
+        }
+        
+        @keyframes float1 {
+            0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.7; }
+            50% { transform: translateY(-30px) translateX(20px); opacity: 1; }
+        }
+        @keyframes float2 {
+            0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.7; }
+            50% { transform: translateY(25px) translateX(-30px); opacity: 1; }
+        }
+        @keyframes float3 {
+            0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.7; }
+            50% { transform: translateY(-20px) translateX(15px); opacity: 1; }
+        }
+        @keyframes float4 {
+            0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.7; }
+            50% { transform: translateY(35px) translateX(-20px); opacity: 1; }
+        }
+        @keyframes float5 {
+            0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.7; }
+            50% { transform: translateY(-25px) translateX(25px); opacity: 1; }
+        }
+        @keyframes float6 {
+            0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.7; }
+            50% { transform: translateY(30px) translateX(-15px); opacity: 1; }
+        }
+        
+        .grid-pattern {
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(139, 95, 191, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(139, 95, 191, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+        }
+        
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+        
+        .floating-hearts {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+        
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            opacity: 0.6;
+            animation-duration: 15s;
+            animation-iteration-count: infinite;
+            animation-timing-function: ease-in-out;
+        }
+        
+        .heart-1 {
+            top: 10%;
+            left: 15%;
+            animation-name: heartFloat1;
+            animation-delay: 0s;
+        }
+        .heart-2 {
+            top: 70%;
+            left: 85%;
+            animation-name: heartFloat2;
+            animation-delay: 3s;
+        }
+        .heart-3 {
+            top: 40%;
+            left: 10%;
+            animation-name: heartFloat3;
+            animation-delay: 6s;
+        }
+        .heart-4 {
+            top: 20%;
+            left: 75%;
+            animation-name: heartFloat4;
+            animation-delay: 9s;
+        }
+        
+        @keyframes heartFloat1 {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.6; }
+            25% { transform: translateY(-40px) rotate(90deg); opacity: 0.8; }
+            50% { transform: translateY(-20px) rotate(180deg); opacity: 1; }
+            75% { transform: translateY(-30px) rotate(270deg); opacity: 0.8; }
+        }
+        @keyframes heartFloat2 {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.6; }
+            25% { transform: translateY(30px) rotate(-90deg); opacity: 0.8; }
+            50% { transform: translateY(15px) rotate(-180deg); opacity: 1; }
+            75% { transform: translateY(25px) rotate(-270deg); opacity: 0.8; }
+        }
+        @keyframes heartFloat3 {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.6; }
+            33% { transform: translateY(-25px) rotate(120deg); opacity: 0.9; }
+            66% { transform: translateY(10px) rotate(240deg); opacity: 1; }
+        }
+        @keyframes heartFloat4 {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.6; }
+            50% { transform: translateY(-35px) rotate(180deg); opacity: 1; }
+        }
+        
+        /* Enhanced Welcome Modal Effects */
+        .welcome-bg {
+            background: linear-gradient(45deg, 
+                rgba(139, 95, 191, 0.1) 0%, 
+                rgba(198, 168, 233, 0.2) 25%, 
+                rgba(139, 95, 191, 0.1) 50%, 
+                rgba(230, 179, 255, 0.2) 75%, 
+                rgba(139, 95, 191, 0.1) 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .magic-border {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .magic-border::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #8B5FBF, #E6B3FF, #C8A8E9, #8B5FBF);
+            background-size: 400% 400%;
+            border-radius: inherit;
+            z-index: -1;
+            animation: gradientShift 3s ease infinite;
+        }
+        
+        .magic-border::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: inherit;
+            border-radius: inherit;
+            z-index: -1;
+        }
+        
+        .neon-text {
+            text-shadow: 
+                0 0 5px rgba(139, 95, 191, 0.8),
+                0 0 10px rgba(139, 95, 191, 0.6),
+                0 0 15px rgba(139, 95, 191, 0.4),
+                0 0 20px rgba(139, 95, 191, 0.2);
+            animation: neonFlicker 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes neonFlicker {
+            from {
+                text-shadow: 
+                    0 0 5px rgba(139, 95, 191, 0.8),
+                    0 0 10px rgba(139, 95, 191, 0.6),
+                    0 0 15px rgba(139, 95, 191, 0.4),
+                    0 0 20px rgba(139, 95, 191, 0.2);
+            }
+            to {
+                text-shadow: 
+                    0 0 2px rgba(139, 95, 191, 0.8),
+                    0 0 8px rgba(139, 95, 191, 0.6),
+                    0 0 12px rgba(139, 95, 191, 0.4),
+                    0 0 18px rgba(139, 95, 191, 0.3);
+            }
+        }
+        
+        /* Lightning Effects */
+        .lightning {
+            position: absolute;
+            width: 2px;
+            height: 100px;
+            background: linear-gradient(to bottom, transparent, #E6B3FF, transparent);
+            opacity: 0;
+            animation: lightning 4s ease-in-out infinite;
+        }
+        
+        .lightning-1 {
+            top: 15%;
+            left: 20%;
+            animation-delay: 0s;
+        }
+        
+        .lightning-2 {
+            top: 60%;
+            right: 25%;
+            animation-delay: 1.5s;
+        }
+        
+        .lightning-3 {
+            top: 35%;
+            left: 70%;
+            animation-delay: 3s;
+        }
+        
+        @keyframes lightning {
+            0%, 90%, 100% { opacity: 0; transform: scaleY(0); }
+            5%, 85% { opacity: 1; transform: scaleY(1); }
+        }
+        
+        /* Breathe Button Animation */
+        .breathe-btn {
+            animation: breathe 2s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(139, 95, 191, 0.4);
+        }
+        
+        @keyframes breathe {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 0 0 20px rgba(139, 95, 191, 0.4);
+            }
+            50% { 
+                transform: scale(1.08);
+                box-shadow: 0 0 30px rgba(139, 95, 191, 0.8);
+            }
+        }
+        
+        /* Welcome Page Success Messages */
+        .welcome-success-msg {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        
+        .welcome-success-msg.show {
+            opacity: 1;
+        }
+        
+        /* Welcome Page Comments */
+        .welcome-comment-msg {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        
+        .welcome-comment-msg.show {
+            opacity: 1;
+        }
+        
+        /* Image Gallery Scroll */
+        .image-scroll-container {
+            overflow: hidden;
+            width: 100%;
+        }
+        
+        .image-scroll-wrapper {
+            display: flex;
+            animation: scrollLeft 20s linear infinite;
+        }
+        
+        @keyframes scrollLeft {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+        
+        .scroll-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body class="font-korean min-h-screen transition-colors duration-300">
+    <!-- Enhanced Video Background -->
+    <div class="fixed inset-0 z-0 overflow-hidden">
+        <!-- Video Background -->
+        <div class="absolute inset-0">
+            <video 
+                id="backgroundVideo"
+                class="w-full h-full object-cover"
+                autoplay 
+                muted 
+                loop 
+                playsinline>
+                <source src="img/v/1.MP4" type="video/mp4">
+            
+            </video>
+        </div>
+        
+        <!-- Animated Particles -->
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="particle particle-1"></div>
+            <div class="particle particle-2"></div>
+            <div class="particle particle-3"></div>
+            <div class="particle particle-4"></div>
+            <div class="particle particle-5"></div>
+            <div class="particle particle-6"></div>
+        </div>
+        
+        <!-- Gradient Overlays - Much Lighter -->
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-200/20 via-pink-100/15 to-indigo-200/20"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-white/5 via-transparent to-transparent"></div>
+        
+        <!-- Animated Grid -->
+        <div class="absolute inset-0 opacity-10">
+            <div class="grid-pattern"></div>
+        </div>
+        
+        <!-- Floating Hearts -->
+        <div class="floating-hearts">
+            <div class="heart heart-1">💜</div>
+            <div class="heart heart-2">💖</div>
+            <div class="heart heart-3">💕</div>
+            <div class="heart heart-4">💝</div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="relative z-10 min-h-screen flex flex-col">
+        <!-- Welcome Modal -->
+        <div id="welcomeModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop">
+            <div class="korean-card magic-border p-10 max-w-lg w-full text-center fade-in welcome-bg">
+                <div class="mb-8">
+                    
+                    <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-6 leading-tight neon-text">원나잇스탠드를 찾고 있어요</h2>
+                    <p class="text-gray-600 dark:text-gray-300 text-base leading-relaxed mb-6">
+                        외로움을 느끼신다면 저희 온라인 클럽✨에 가입하세요. 전문 에이전트 서비스를 통해 원나잇 스탠드를 실현해 드리겠습니다.👩‍💼. 💦서로의 사생활을 절대 간섭하지 않습니다.
+                    </p>
+                    
+                    <!-- Image Gallery Scroll -->
+                    <div class="image-scroll-container mb-6">
+                        <div class="image-scroll-wrapper">
+                            <img src="img/b/9.jpg" alt="用户1" class="scroll-image">
+                            <img src="img/b/1.jpg" alt="用户2" class="scroll-image">
+                            <img src="img/b/2.jpg" alt="用户3" class="scroll-image">
+                            <img src="img/b/3.jpg" alt="用户4" class="scroll-image">
+                            <img src="img/b/4.jpg" alt="用户5" class="scroll-image">
+                            <img src="img/b/5.jpg" alt="用户6" class="scroll-image">
+                        </div>
+                    </div>
+                    
+                    <!-- Success messages scrolling -->
+                    <div class="mb-4 h-6 flex items-center justify-center">
+                        <div id="welcomeSuccessMessage" class="welcome-success-msg bg-green-500/20 backdrop-blur-sm rounded-full px-4 py-1 text-center">
+                            <p class="text-sm text-green-600 dark:text-green-300 font-medium flex items-center justify-center">
+                                <i class="fas fa-heart mr-2 text-pink-500"></i>
+                                <span id="welcomeSuccessText">3명이 1분 전에 데이트에 성공했습니다.</span>
+                                <i class="fas fa-sparkles ml-2 text-yellow-500"></i>
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Comments scrolling -->
+                    <div class="mb-6 h-12 flex items-center justify-center">
+                        <div id="welcomeCommentMessage" class="welcome-comment-msg bg-purple-500/20 backdrop-blur-sm rounded-lg px-4 py-2 text-center max-w-full">
+                            <p class="text-sm text-purple-600 dark:text-purple-300 font-medium flex items-center justify-start">
+                                <i class="fas fa-quote-left mr-2 text-purple-400 flex-shrink-0"></i>
+                                <span id="welcomeCommentText" class="text-left">어젯밤 흥미로운 영혼과 잊지 못할 밤을 보냈습니다</span>
+                                <i class="fas fa-quote-right ml-2 text-purple-400 flex-shrink-0"></i>
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Security badges - No animation -->
+                    <div class="grid grid-cols-3 gap-2 mb-6">
+                        <div class="bg-green-500/20 backdrop-blur-sm rounded-lg p-2 text-center">
+                            <i class="fas fa-shield-alt text-green-400 text-sm mb-1"></i>
+                            <p class="text-xs text-green-600 dark:text-green-300 font-medium">안전 및 보안</p>
+                        </div>
+                        <div class="bg-blue-500/20 backdrop-blur-sm rounded-lg p-2 text-center">
+                            <i class="fas fa-lock text-blue-400 text-sm mb-1"></i>
+                            <p class="text-xs text-blue-600 dark:text-blue-300 font-medium">개인정보 보호</p>
+                        </div>
+                        <div class="bg-purple-500/20 backdrop-blur-sm rounded-lg p-2 text-center">
+                            <i class="fas fa-star text-purple-400 text-sm mb-1"></i>
+                            <p class="text-xs text-purple-600 dark:text-purple-300 font-medium">만족도 98%</p>
+                        </div>
+                    </div>
+                </div>
+                <button onclick="startExploration()" class="w-full py-4 px-8 bg-gradient-to-r from-korean-purple via-korean-pink to-korean-lavender text-white rounded-full font-bold text-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 relative overflow-hidden magic-border breathe-btn">
+                    <span class="relative z-10">잠금 해제 시작 ✨</span>
+                    <div class="absolute inset-0 bg-gradient-to-r from-korean-lavender to-korean-purple opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Loading Modal -->
+        <div id="loadingModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop hidden">
+            <div class="korean-card p-10 max-w-sm w-full text-center">
+                <div class="mb-8">
+                    <i class="fas fa-magic text-4xl text-korean-purple mb-6 animate-spin"></i>
+                    <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">당신을 위한 매칭...</h3>
+                </div>
+                <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 mb-6">
+                    <div class="progress-bar h-3 rounded-full"></div>
+                </div>
+                <p class="text-base text-gray-600 dark:text-gray-400">잠시만 기다려 주세요. 설렘이 곧 찾아올 거예요.</p>
+            </div>
+        </div>
+
+        <!-- Main App with Enhanced Design -->
+        <div id="mainApp" class="hidden flex-1 p-4">
+            <!-- Enhanced Header -->
+            <div class="text-center mb-8">
+                <div class="relative inline-block">
+                    <h1 class="text-3xl font-bold text-white mb-3 drop-shadow-lg">💜 원나잇 스탠드를 찾고 있어요</h1>
+                    <div class="absolute -top-2 -right-2">
+                        <span class="inline-block w-3 h-3 bg-red-500 rounded-full animate-pulse"></span>
+                    </div>
+                </div>
+                <p class="text-purple-200 text-base font-medium">당신에게 딱 맞는 파트너를 찾으세요</p>
+                <div class="mt-4 flex justify-center">
+                    <div class="w-20 h-1 bg-gradient-to-r from-korean-purple to-korean-pink rounded-full"></div>
+                </div>
+            </div>
+
+            <!-- Enhanced Tabs -->
+              <div class="flex space-x-2 mb-8 px-1">
+                <button onclick="switchTab('teacher')" id="tab-teacher" class="flex-1 py-3 px-3 rounded-2xl text-sm font-bold transition-all duration-300 tab-active relative">
+                    <span class="block">👩‍🏫</span>
+                    <span class="text-xs">선생님</span>
+                </button>
+                <button onclick="switchTab('xiaomei')" id="tab-xiaomei" class="flex-1 py-3 px-3 rounded-2xl text-sm font-bold transition-all duration-300 tab-inactive relative">
+                    <span class="block">🌸</span>
+                    <span class="text-xs">부인</span>
+                </button>
+                <button onclick="switchTab('xiaochen')" id="tab-xiaochen" class="flex-1 py-3 px-3 rounded-2xl text-sm font-bold transition-all duration-300 tab-inactive relative">
+                    <span class="block">💫</span>
+                    <span class="text-xs">화이트칼라</span>
+                </button>
+                <button onclick="switchTab('xiaojiu')" id="tab-xiaojiu" class="flex-1 py-3 px-3 rounded-2xl text-sm font-bold transition-all duration-300 tab-inactive relative">
+                    <span class="block">🌟</span>
+                    <span class="text-xs">왕실 자매</span>
+                </button>
+            </div>
+
+            <!-- Enhanced User Cards Container -->
+            <div id="userContainer" class="space-y-6 ">
+                <!-- User cards will be dynamically generated -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div id="contactSection" class="korean-card p-6 mx-4 mb-8 hidden">
+        <div class="text-center mb-4">
+            <div class="bg-gradient-to-r from-korean-purple to-korean-pink text-white px-4 py-2 rounded-lg mb-3 shadow-lg">
+                <p class="text-base font-bold">🎉 VIP 전용 연락처 정보 🎉</p>
+            </div>
+        </div>
+        <div class="flex space-x-3">
+            <button id="line-anchor" onclick="goToQQ()" 
+               class="flex-1 py-3 px-4 bg-gradient-to-r from-green-600 via-green-500 to-emerald-500 text-white rounded-xl text-sm font-bold hover:shadow-xl transition-all duration-300 transform hover:scale-105 contact-btn flex items-center justify-center relative overflow-hidden">
+                <i class="fab fa-line mr-2 text-lg"></i>
+                <span> Line</span>
+                <div class="absolute top-0 right-0 w-6 h-6 bg-yellow-400 rounded-bl-xl flex items-center justify-center">
+                    <i class="fas fa-crown text-xs text-yellow-800"></i>
+                </div>
+            </button>
+            <button id="telegram-anchor" onclick="goToGoogle()" 
+               class="flex-1 py-3 px-4 bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-500 text-white rounded-xl text-sm font-bold hover:shadow-xl transition-all duration-300 transform hover:scale-105 contact-btn flex items-center justify-center relative overflow-hidden">
+                <i class="fab fa-telegram mr-2 text-lg"></i>
+                <span> Telegram</span>
+                <div class="absolute top-0 right-0 w-6 h-6 bg-yellow-400 rounded-bl-xl flex items-center justify-center">
+                    <i class="fas fa-crown text-xs text-yellow-800"></i>
+                </div>
+            </button>
+        </div>
+    </div>
+
+    <!-- Enhanced Image Modal -->
+    <div id="imageModal" class="fixed inset-0 flex items-center justify-center p-4 hidden" style="z-index: 9999; background: rgba(0, 0, 0, 0.8);">
+        <div class="relative max-w-full max-h-full">
+            <img id="modalImage" src="" alt="" class="max-w-full max-h-full object-contain rounded-2xl shadow-2xl">
+            <button onclick="closeImageModal()" class="absolute -top-4 -right-4 w-12 h-12 bg-korean-purple text-white rounded-full flex items-center justify-center hover:bg-korean-deep transition-colors shadow-lg">
+                <i class="fas fa-times text-lg"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Enhanced Video Modal with Controls -->
+    <div id="videoModal" class="fixed inset-0 flex items-center justify-center p-2 md:p-4 hidden" style="z-index: 9999; background: rgba(0, 0, 0, 0.8);" onclick="closeVideoModalOnBackdrop(event)">
+        <div class="relative w-full max-w-4xl" onclick="event.stopPropagation()">
+            <div class="aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl">
+                <video id="modalVideo" class="w-full h-full" controls autoplay muted>
+                    <source src="" type="video/mp4">
+                    
+                </video>
+            </div>
+            <div class="absolute -top-12 md:-top-16 left-0 flex space-x-2">
+                <button onclick="muteVideo()" id="muteBtn" class="w-10 h-10 md:w-12 md:h-12 bg-korean-purple/80 text-white rounded-full flex items-center justify-center hover:bg-korean-purple transition-colors shadow-lg">
+                    <i class="fas fa-volume-mute text-sm" id="volumeIcon"></i>
+                </button>
+                <button onclick="pauseVideo()" id="pauseBtn" class="w-10 h-10 md:w-12 md:h-12 bg-korean-purple/80 text-white rounded-full flex items-center justify-center hover:bg-korean-purple transition-colors shadow-lg">
+                    <i class="fas fa-pause text-sm" id="playIcon"></i>
+                </button>
+            </div>
+            <button onclick="closeVideoModal()" class="absolute -top-3 -right-3 md:-top-4 md:-right-4 w-10 h-10 md:w-12 md:h-12 bg-korean-purple text-white rounded-full flex items-center justify-center hover:bg-korean-deep transition-colors shadow-lg z-50">
+                <i class="fas fa-times text-sm md:text-lg"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Dark mode detection
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+
+        // Welcome page success messages
+        const welcomeSuccessMessages = [
+            "3명이 1분 전에 데이트에 성공했습니다.",
+            "7명이 2분 전에 데이트에 성공했습니다.", 
+            "14명이 5분 전에 데이트에 성공했습니다.",
+            "20명이 6분 전에 데이트에 성공했습니다."
+        ];
+
+        // Welcome page comments
+        const welcomeComments = [
+            "어젯밤 흥미로운 영혼과 잊지 못할 밤을 보냈습니다",
+            "채팅부터 미팅까지 모든 것이 매우 자연스러웠고 제가 기대했던 대로였습니다.",
+            "어젯밤 정말 즐거운 대화를 나누었고, 서로 만나서 기분이 좋았어요. 즐거운 밤을 보냈어요.",
+            "놀랍게도 여기 사람들은 매우 실제적이고 경험도 훌륭했습니다."
+        ];
+
+        let welcomeMessageIndex = 0;
+        let welcomeCommentIndex = 0;
+        let welcomeMessageInterval;
+        let welcomeCommentInterval;
+
+        function showWelcomeSuccessMessage() {
+            const messageElement = document.getElementById('welcomeSuccessMessage');
+            const textElement = document.getElementById('welcomeSuccessText');
+            
+            messageElement.classList.remove('show');
+            
+            setTimeout(() => {
+                textElement.textContent = welcomeSuccessMessages[welcomeMessageIndex];
+                messageElement.classList.add('show');
+                welcomeMessageIndex = (welcomeMessageIndex + 1) % welcomeSuccessMessages.length;
+            }, 350);
+        }
+
+        function showWelcomeComment() {
+            const commentElement = document.getElementById('welcomeCommentMessage');
+            const textElement = document.getElementById('welcomeCommentText');
+            
+            commentElement.classList.remove('show');
+            
+            setTimeout(() => {
+                textElement.textContent = welcomeComments[welcomeCommentIndex];
+                commentElement.classList.add('show');
+                welcomeCommentIndex = (welcomeCommentIndex + 1) % welcomeComments.length;
+            }, 300);
+        }
+
+        function startWelcomeMessages() {
+            // Show first message immediately
+            document.getElementById('welcomeSuccessMessage').classList.add('show');
+            document.getElementById('welcomeCommentMessage').classList.add('show');
+            
+            // Then change every 2 seconds
+            welcomeMessageInterval = setInterval(showWelcomeSuccessMessage, 2000);
+            welcomeCommentInterval = setInterval(showWelcomeComment, 2000);
+        }
+
+        function stopWelcomeMessages() {
+            if (welcomeMessageInterval) {
+                clearInterval(welcomeMessageInterval);
+            }
+            if (welcomeCommentInterval) {
+                clearInterval(welcomeCommentInterval);
+            }
+        }
+
+        // User data
+        const userData = {
+             teacher: [
+                { id: 1, lastOnline: '4분 전 온라인', mainImage: 'img/1/2.jpg', video: 'img/1/1.MP4', images: ['img/1/3.jpg', 'img/1/4.jpg', 'img/1/2.jpg'] },
+                { id: 2, lastOnline: '2분 전 온라인', mainImage: 'img/2/2.jpg', video: 'img/2/1.MP4', images: ['img/2/3.jpg', 'img/2/4.jpg', 'img/2/2.jpg'] },
+                { id: 3, lastOnline: '3분 전 온라인', mainImage: 'img/3/4.jpg', video: 'img/3/1.MP4', images: ['img/3/3.jpg', 'img/3/4.jpg', 'img/3/2.jpg'] }
+            ],
+            xiaomei: [
+                { id: 1, lastOnline: '2분 전 온라인', mainImage: 'img/4/2.jpg', video: 'img/4/1.MP4', images: ['img/4/3.jpg', 'img/4/4.jpg', 'img/4/2.jpg'] },
+                { id: 2, lastOnline: '1분 전 온라인', mainImage: 'img/5/2.jpg', video: 'img/5/1.MP4', images: ['img/5/3.jpg', 'img/5/4.jpg', 'img/5/2.jpg'] },
+                { id: 3, lastOnline: '3분 전 온라인', mainImage: 'img/6/2.jpg', video: 'img/6/1.MP4', images: ['img/6/3.jpg', 'img/6/4.jpg', 'img/6/2.jpg'] }
+            ],
+            xiaochen: [
+                { id: 1, lastOnline: '2분 전 온라인', mainImage: 'img/7/2.jpg', video: 'img/7/1.MP4', images: ['img/7/3.jpg', 'img/7/4.jpg', 'img/7/2.jpg'] },
+                { id: 2, lastOnline: '1분 전 온라인', mainImage: 'img/8/2.jpg', video: 'img/8/1.MP4', images: ['img/8/3.jpg', 'img/8/4.jpg', 'img/8/2.jpg'] },
+                { id: 3, lastOnline: '5분 전 온라인', mainImage: 'img/9/2.jpg', video: 'img/9/1.MP4', images: ['img/9/3.jpg', 'img/9/4.jpg', 'img/9/2.jpg'] }
+            ],
+            xiaojiu: [
+                { id: 1, lastOnline: '6분 전 온라인', mainImage: 'img/11/2.jpg', video: 'img/11/1.MP4', images: ['img/11/3.jpg', 'img/11/4.jpg', 'img/11/2.jpg'] },
+                { id: 2, lastOnline: '2분 전 온라인', mainImage: 'img/12/2.jpg', video: 'img/12/1.MP4', images: ['img/12/3.jpg', 'img/12/4.jpg', 'img/12/2.jpg'] },
+                { id: 3, lastOnline: '1분 전 온라인', mainImage: 'img/13/2.jpg', video: 'img/13/1.MP4', images: ['img/13/3.jpg', 'img/13/4.jpg', 'img/13/2.jpg'] }
+				]
+        };
+
+        let currentTab = 'teacher';
+
+        function startExploration() {
+            stopWelcomeMessages();
+            document.getElementById('welcomeModal').classList.add('hidden');
+            document.getElementById('loadingModal').classList.remove('hidden');
+            
+            setTimeout(() => {
+                document.getElementById('loadingModal').classList.add('hidden');
+                document.getElementById('mainApp').classList.remove('hidden');
+                document.getElementById('contactSection').classList.remove('hidden');
+                renderUsers(currentTab);
+            }, 2000);
+        }
+
+        function switchTab(tab) {
+            // Update tab buttons with enhanced animation
+            document.querySelectorAll('[id^="tab-"]').forEach(btn => {
+                btn.classList.remove('tab-active');
+                btn.classList.add('tab-inactive');
+            });
+            document.getElementById(`tab-${tab}`).classList.add('tab-active');
+            document.getElementById(`tab-${tab}`).classList.remove('tab-inactive');
+            
+            currentTab = tab;
+            renderUsers(tab);
+        }
+
+        function renderUsers(category) {
+            const container = document.getElementById('userContainer');
+            const users = userData[category];
+            
+            container.innerHTML = users.map((user, index) => `
+                <div class="korean-card p-6 user-card fade-in ${index === 2 ? 'premium-card' : ''}" style="animation-delay: ${index * 0.2}s">
+                    <!-- Status Bar -->
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center">
+                            <div class="w-4 h-4 bg-green-400 rounded-full online-indicator mr-3"></div>
+                            <span class="text-sm font-medium text-gray-600 dark:text-gray-400">${user.lastOnline}</span>
+                        </div>
+                        ${index === 2 ? '<span class="text-xs bg-gradient-to-r from-yellow-400 to-yellow-600 text-white px-3 py-1 rounded-full font-bold">VIP</span>' : ''}
+                    </div>
+                    
+                    <!-- Main Image with Video Overlay -->
+                    <div class="relative mb-5 group">
+                        <div class="w-full pb-[100%] relative overflow-hidden rounded-2xl">
+                            <img src="${user.mainImage}" alt="主图" 
+                                 class="absolute top-0 left-0 w-full h-full object-cover cursor-pointer transition-all duration-300 group-hover:scale-105"
+                                 onclick="openImageModal('${user.mainImage}')">
+                        </div>
+                        <div class="absolute top-4 right-4 z-20">
+                            <button onclick="event.stopPropagation(); openVideoModal('${user.video}')" 
+                                    class="w-12 h-12 bg-korean-purple/90 backdrop-blur-sm text-white rounded-full flex items-center justify-center hover:bg-korean-purple transition-all duration-300 shadow-lg hover:scale-110">
+                                <i class="fas fa-play text-sm ml-0.5"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Image Gallery -->
+                    <div class="grid grid-cols-3 gap-2 mb-5">
+                        ${user.images.map((img, imgIndex) => `
+                            <div class="relative w-full pb-[100%] overflow-hidden rounded-xl">
+                                <img src="${img}" alt="次图${imgIndex + 1}" 
+                                     class="absolute top-0 left-0 w-full h-full object-cover cursor-pointer hover:opacity-80 transition-all duration-300 transform hover:scale-105"
+                                     onclick="event.stopPropagation(); openImageModal('${img}')">
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    ${index === 2 ? `
+                    <div class="text-center pt-2 border-t border-purple-200 dark:border-purple-700">
+                        <div class="bg-gradient-to-r from-korean-purple to-korean-pink text-white px-4 py-2 rounded-lg mb-3 shadow-lg">
+                            <p class="text-base font-bold">🎉 2025년을 보내주시면 우선권을 드립니다. 🎉</p>
+                        </div>
+                    </div>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        function openImageModal(imageSrc) {
+            document.getElementById('modalImage').src = imageSrc;
+            document.getElementById('imageModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeImageModal() {
+            document.getElementById('imageModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function openVideoModal(videoUrl) {
+            // 直接设置MP4视频源
+            const video = document.getElementById('modalVideo');
+            const source = video.querySelector('source');
+            source.src = videoUrl;
+            video.load(); // 重新加载视频
+            document.getElementById('videoModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeVideoModal() {
+            const video = document.getElementById('modalVideo');
+            video.pause();
+            video.currentTime = 0;
+            const source = video.querySelector('source');
+            source.src = '';
+            document.getElementById('videoModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function muteVideo() {
+            const video = document.getElementById('modalVideo');
+            const volumeIcon = document.getElementById('volumeIcon');
+            
+            if (video.muted) {
+                video.muted = false;
+                volumeIcon.classList.remove('fa-volume-mute');
+                volumeIcon.classList.add('fa-volume-up');
+            } else {
+                video.muted = true;
+                volumeIcon.classList.remove('fa-volume-up');
+                volumeIcon.classList.add('fa-volume-mute');
+            }
+        }
+
+        function pauseVideo() {
+            const video = document.getElementById('modalVideo');
+            const playIcon = document.getElementById('playIcon');
+            
+            if (video.paused) {
+                video.play();
+                playIcon.classList.remove('fa-play');
+                playIcon.classList.add('fa-pause');
+            } else {
+                video.pause();
+                playIcon.classList.remove('fa-pause');
+                playIcon.classList.add('fa-play');
+            }
+        }
+
+        // Bottom section Line button - go to QQ
+        function goToQQ() {
+            console.log('Bottom Line contact button clicked - going to QQ');
+            window.open('https://www.qq.com', '_blank');
+        }
+
+        // Bottom section Telegram button - go to Google
+        function goToGoogle() {
+            console.log('Bottom Telegram contact button clicked - going to Google');
+            window.open('https://www.google.com', '_blank');
+        }
+
+        // Close video modal when clicking on backdrop
+        function closeVideoModalOnBackdrop(event) {
+            // Only close if clicking on the backdrop itself, not the video container
+            if (event.target === event.currentTarget) {
+                closeVideoModal();
+            }
+        }
+
+        // Enhanced modal closing
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal-backdrop')) {
+                closeImageModal();
+            }
+        });
+
+        // Keyboard support
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeImageModal();
+                closeVideoModal();
+            }
+        });
+
+        // Start welcome messages when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            startWelcomeMessages();
+        });
+    </script>
+</body>
+</html>
