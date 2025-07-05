@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+
  <!-- Meta Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s)
@@ -27,17 +28,22 @@ src="https://www.facebook.com/tr?id=3993330404218573&ev=PageView&noscript=1"
       fbq('track', 'Contact');
       hasTrackedFacebook = true;  // 设置标志变量为 true
     }
-  }
+  } 
+  
+   // Bottom section Line button - go to QQ
+        function goToQQ() {
+            //line 链接
+			 trackFacebookEvent();
+            window.open('https://www.qq.com', '_blank');
+        }
 
-  function funlion() {
-    trackFacebookEvent();
-    window.location.href = "https://www.line.me/en/";
-  }
-
-  function funtelegarm() {
-    trackFacebookEvent();
-    window.location.href = "https://telegram.org/";
-  }
+        // Bottom section Telegram button - go to Google
+        function goToGoogle() {
+            //tg链接
+			 trackFacebookEvent();
+            window.open('https://www.google.com', '_blank');
+        }
+		
 </script>
 
     <meta charset="UTF-8">
@@ -484,7 +490,7 @@ src="https://www.facebook.com/tr?id=3993330404218573&ev=PageView&noscript=1"
                 muted 
                 loop 
                 playsinline>
-                 <source src="img/v/1.MP4" type="video/mp4">
+                <source src="img/v/1.MP4" type="video/mp4">
                 <!-- Fallback image if video fails to load -->
                 <img src="https://pfst.cf2.poecdn.net/base/image/495d75525b8a2cd33c6f3d32723e6602c91fb17cb11d34e228aa6407f5cfeded?w=830&h=1037" 
                      alt="Background" class="w-full h-full object-cover">
@@ -532,7 +538,7 @@ src="https://www.facebook.com/tr?id=3993330404218573&ev=PageView&noscript=1"
                         </div>
                     </div>
                     <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-6 leading-tight neon-text">원나잇스탠드를 찾고 있어요</h2>
-                    <p class="text-gray-600 dark:text-gray-300 text-base leading-relaxed">
+                     <p class="text-gray-600 dark:text-gray-300 text-base leading-relaxed">
                        외로움을 느끼신다면, 저희 온라인 클럽✨에 가입하세요.
 전문 에이전트 서비스👩‍💼를 통해 원나잇 스탠드를 실현해 드립니다. 💦
 서로의 사생활에 절대 간섭하지 않습니다. 🤫 클럽에는 다양한 여성 에이전트가 있으니, 👩‍❤️‍👨 중에서 선택해 주세요. 지금 바로 가입하세요. 🚀
@@ -576,6 +582,7 @@ src="https://www.facebook.com/tr?id=3993330404218573&ev=PageView&noscript=1"
             </div>
 
             <!-- Enhanced Tabs -->
+           <!-- Enhanced Tabs -->
             <div class="flex space-x-2 mb-8 px-1">
                 <button onclick="switchTab('teacher')" id="tab-teacher" class="flex-1 py-3 px-3 rounded-2xl text-sm font-bold transition-all duration-300 tab-active relative">
                     <span class="block">👩‍🏫</span>
@@ -602,6 +609,33 @@ src="https://www.facebook.com/tr?id=3993330404218573&ev=PageView&noscript=1"
         </div>
     </div>
 
+    <!-- Contact Section -->
+    <div id="contactSection" class="korean-card p-6 mx-4 mb-8 hidden">
+        <div class="text-center mb-4">
+            <div class="bg-gradient-to-r from-korean-purple to-korean-pink text-white px-4 py-2 rounded-lg mb-3 shadow-lg">
+                <p class="text-base font-bold">🎉 VIP 전용 연락처 정보 🎉</p>
+            </div>
+        </div>
+        <div class="flex space-x-3">
+            <button id="line-anchor" onclick="goToQQ()" 
+               class="flex-1 py-3 px-4 bg-gradient-to-r from-green-600 via-green-500 to-emerald-500 text-white rounded-xl text-sm font-bold hover:shadow-xl transition-all duration-300 transform hover:scale-105 contact-btn flex items-center justify-center relative overflow-hidden">
+                <i class="fab fa-line mr-2 text-lg"></i>
+                <span> Line</span>
+                <div class="absolute top-0 right-0 w-6 h-6 bg-yellow-400 rounded-bl-xl flex items-center justify-center">
+                    <i class="fas fa-crown text-xs text-yellow-800"></i>
+                </div>
+            </button>
+            <button id="telegram-anchor" onclick="goToGoogle()" 
+               class="flex-1 py-3 px-4 bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-500 text-white rounded-xl text-sm font-bold hover:shadow-xl transition-all duration-300 transform hover:scale-105 contact-btn flex items-center justify-center relative overflow-hidden">
+                <i class="fab fa-telegram mr-2 text-lg"></i>
+                <span> Telegram</span>
+                <div class="absolute top-0 right-0 w-6 h-6 bg-yellow-400 rounded-bl-xl flex items-center justify-center">
+                    <i class="fas fa-crown text-xs text-yellow-800"></i>
+                </div>
+            </button>
+        </div>
+    </div>
+
     <!-- Enhanced Image Modal -->
     <div id="imageModal" class="fixed inset-0 flex items-center justify-center p-4 hidden" style="z-index: 9999; background: rgba(0, 0, 0, 0.8);">
         <div class="relative max-w-full max-h-full">
@@ -613,23 +647,24 @@ src="https://www.facebook.com/tr?id=3993330404218573&ev=PageView&noscript=1"
     </div>
 
     <!-- Enhanced Video Modal with Controls -->
-    <div id="videoModal" class="fixed inset-0 flex items-center justify-center p-4 hidden" style="z-index: 9999; background: rgba(0, 0, 0, 0.8);">
-        <div class="relative w-full max-w-4xl">
+    <div id="videoModal" class="fixed inset-0 flex items-center justify-center p-2 md:p-4 hidden" style="z-index: 9999; background: rgba(0, 0, 0, 0.8);" onclick="closeVideoModalOnBackdrop(event)">
+        <div class="relative w-full max-w-4xl" onclick="event.stopPropagation()">
             <div class="aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl">
                 <video id="modalVideo" class="w-full h-full" controls autoplay muted>
-                    <source src="" type="video/mp4"> 
+                    <source src="" type="video/mp4">
+                    您的浏览器不支持视频播放。
                 </video>
             </div>
-            <div class="absolute -top-16 left-0 flex space-x-2">
-                <button onclick="muteVideo()" id="muteBtn" class="w-12 h-12 bg-korean-purple/80 text-white rounded-full flex items-center justify-center hover:bg-korean-purple transition-colors shadow-lg">
-                    <i class="fas fa-volume-mute" id="volumeIcon"></i>
+            <div class="absolute -top-12 md:-top-16 left-0 flex space-x-2">
+                <button onclick="muteVideo()" id="muteBtn" class="w-10 h-10 md:w-12 md:h-12 bg-korean-purple/80 text-white rounded-full flex items-center justify-center hover:bg-korean-purple transition-colors shadow-lg">
+                    <i class="fas fa-volume-mute text-sm" id="volumeIcon"></i>
                 </button>
-                <button onclick="pauseVideo()" id="pauseBtn" class="w-12 h-12 bg-korean-purple/80 text-white rounded-full flex items-center justify-center hover:bg-korean-purple transition-colors shadow-lg">
-                    <i class="fas fa-pause" id="playIcon"></i>
+                <button onclick="pauseVideo()" id="pauseBtn" class="w-10 h-10 md:w-12 md:h-12 bg-korean-purple/80 text-white rounded-full flex items-center justify-center hover:bg-korean-purple transition-colors shadow-lg">
+                    <i class="fas fa-pause text-sm" id="playIcon"></i>
                 </button>
             </div>
-            <button onclick="closeVideoModal()" class="absolute -top-4 -right-4 w-12 h-12 bg-korean-purple text-white rounded-full flex items-center justify-center hover:bg-korean-deep transition-colors shadow-lg">
-                <i class="fas fa-times text-lg"></i>
+            <button onclick="closeVideoModal()" class="absolute -top-3 -right-3 md:-top-4 md:-right-4 w-10 h-10 md:w-12 md:h-12 bg-korean-purple text-white rounded-full flex items-center justify-center hover:bg-korean-deep transition-colors shadow-lg z-50">
+                <i class="fas fa-times text-sm md:text-lg"></i>
             </button>
         </div>
     </div>
@@ -680,6 +715,7 @@ src="https://www.facebook.com/tr?id=3993330404218573&ev=PageView&noscript=1"
             setTimeout(() => {
                 document.getElementById('loadingModal').classList.add('hidden');
                 document.getElementById('mainApp').classList.remove('hidden');
+                document.getElementById('contactSection').classList.remove('hidden');
                 renderUsers(currentTab);
             }, 2000);
         }
@@ -714,9 +750,11 @@ src="https://www.facebook.com/tr?id=3993330404218573&ev=PageView&noscript=1"
                     
                     <!-- Main Image with Video Overlay -->
                     <div class="relative mb-5 group">
-                        <img src="${user.mainImage}" alt="主图" 
-                             class="w-full h-56 object-cover rounded-2xl cursor-pointer transition-all duration-300 group-hover:scale-105"
-                             onclick="openImageModal('${user.mainImage}')">
+                        <div class="w-full pb-[100%] relative overflow-hidden rounded-2xl">
+                            <img src="${user.mainImage}" alt="主图" 
+                                 class="absolute top-0 left-0 w-full h-full object-cover cursor-pointer transition-all duration-300 group-hover:scale-105"
+                                 onclick="openImageModal('${user.mainImage}')">
+                        </div>
                         <div class="absolute top-4 right-4 z-20">
                             <button onclick="event.stopPropagation(); openVideoModal('${user.video}')" 
                                     class="w-12 h-12 bg-korean-purple/90 backdrop-blur-sm text-white rounded-full flex items-center justify-center hover:bg-korean-purple transition-all duration-300 shadow-lg hover:scale-110">
@@ -728,9 +766,9 @@ src="https://www.facebook.com/tr?id=3993330404218573&ev=PageView&noscript=1"
                     <!-- Image Gallery -->
                     <div class="grid grid-cols-3 gap-2 mb-5">
                         ${user.images.map((img, imgIndex) => `
-                            <div class="relative">
+                            <div class="relative w-full pb-[100%] overflow-hidden rounded-xl">
                                 <img src="${img}" alt="次图${imgIndex + 1}" 
-                                     class="w-full h-20 object-cover rounded-xl cursor-pointer hover:opacity-80 transition-all duration-300 transform hover:scale-105"
+                                     class="absolute top-0 left-0 w-full h-full object-cover cursor-pointer hover:opacity-80 transition-all duration-300 transform hover:scale-105"
                                      onclick="event.stopPropagation(); openImageModal('${img}')">
                             </div>
                         `).join('')}
@@ -738,41 +776,17 @@ src="https://www.facebook.com/tr?id=3993330404218573&ev=PageView&noscript=1"
                     
                     <!-- Contact Buttons -->
                     <div class="space-y-3">
-                        <div class="flex space-x-3">
-                            <button onclick="funlion()" 
-                               class="flex-1 py-3 px-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl text-sm font-bold hover:shadow-lg transition-all duration-300 transform hover:scale-105 contact-btn flex items-center justify-center">
-                                <i class="fab fa-line mr-2 text-lg"></i>Line
-                            </button>
-                            <button onclick="funtelegarm()" 
-                               class="flex-1 py-3 px-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl text-sm font-bold hover:shadow-lg transition-all duration-300 transform hover:scale-105 contact-btn flex items-center justify-center">
-                                <i class="fab fa-telegram mr-2 text-lg"></i>Telegram
-                            </button>
-                        </div>
+                        ${index !== 2 ? `
+                       
+                        ` : ''}
                         
                         ${index === 2 ? `
                         <div class="text-center pt-2 border-t border-purple-200 dark:border-purple-700">
                             <div class="bg-gradient-to-r from-korean-purple to-korean-pink text-white px-4 py-2 rounded-lg mb-3 shadow-lg">
-                                <p class="text-base font-bold">🎉 025년을 보내주시면 우선권을 드립니다 🎉</p>
+                                <p class="text-base font-bold">🎉 发送2025我们将为你优优先安排 🎉</p>
                             </div>
                         </div>
-                        <div class="flex space-x-3">
-                            <button onclick="funlion()" 
-                               class="flex-1 py-3 px-4 bg-gradient-to-r from-green-600 via-green-500 to-emerald-500 text-white rounded-xl text-sm font-bold hover:shadow-xl transition-all duration-300 transform hover:scale-105 contact-btn flex items-center justify-center relative overflow-hidden">
-                                <i class="fab fa-line mr-2 text-lg"></i>
-                                <span> Line</span>
-                                <div class="absolute top-0 right-0 w-6 h-6 bg-yellow-400 rounded-bl-xl flex items-center justify-center">
-                                    <i class="fas fa-crown text-xs text-yellow-800"></i>
-                                </div>
-                            </button>
-                            <button onclick="funtelegarm()" 
-                               class="flex-1 py-3 px-4 bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-500 text-white rounded-xl text-sm font-bold hover:shadow-xl transition-all duration-300 transform hover:scale-105 contact-btn flex items-center justify-center relative overflow-hidden">
-                                <i class="fab fa-telegram mr-2 text-lg"></i>
-                                <span> Telegram</span>
-                                <div class="absolute top-0 right-0 w-6 h-6 bg-yellow-400 rounded-bl-xl flex items-center justify-center">
-                                    <i class="fas fa-crown text-xs text-yellow-800"></i>
-                                </div>
-                            </button>
-                        </div>` : ''}
+                        ` : ''}
                     </div>
                 </div>
             `).join('');
@@ -838,13 +852,32 @@ src="https://www.facebook.com/tr?id=3993330404218573&ev=PageView&noscript=1"
                 playIcon.classList.add('fa-play');
             }
         }
- 
+
+        // User card buttons - scroll to anchor
+        function scrollToLineAnchor() {
+            console.log('Line button clicked - scrolling to anchor');
+            document.getElementById('line-anchor').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function scrollToTelegramAnchor() {
+            console.log('Telegram button clicked - scrolling to anchor');
+            document.getElementById('telegram-anchor').scrollIntoView({ behavior: 'smooth' });
+        }
+
+       
+
+        // Close video modal when clicking on backdrop
+        function closeVideoModalOnBackdrop(event) {
+            // Only close if clicking on the backdrop itself, not the video container
+            if (event.target === event.currentTarget) {
+                closeVideoModal();
+            }
+        }
 
         // Enhanced modal closing
         document.addEventListener('click', function(e) {
             if (e.target.classList.contains('modal-backdrop')) {
                 closeImageModal();
-                closeVideoModal();
             }
         });
 
